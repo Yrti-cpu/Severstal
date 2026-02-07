@@ -1,3 +1,31 @@
 spring:
+  docker:
+   compose:
+      enabled: false  # отключить docker-compose
   application:
     name: Severstal
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/postgres
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+
+logging:
+  level:
+    org.hibernate: warn
+    org.hibernate.SQL: off
+    org.hibernate.type.descriptor.sql: off
+    org.springframework.web: info
+
+server:
+  port: 8080
